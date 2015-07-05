@@ -1,0 +1,22 @@
+package TestTask.AccountManagement;
+
+import static org.junit.Assert.*;
+
+import org.junit.Test;
+
+public class AccountMAnagementTest {
+
+	@Test
+	public void testFindAccountByName() {
+		AccountMAnagement am=new AccountMAnagement();
+		
+		assertEquals("Must return - Peter | Petrov", "Petr | Petrov", am.findAccountByName("Petr"));
+	}
+	
+	
+	@Test
+	public void testEditSurname() {
+		fail("Not yet implemented");
+	}
+
+}

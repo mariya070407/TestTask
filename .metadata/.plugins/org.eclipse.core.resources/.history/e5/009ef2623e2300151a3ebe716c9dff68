@@ -1,0 +1,36 @@
+package TestTask.AccountManagement;
+
+import java.sql.*;
+
+public class DBconnect {
+	  private static Connection con = null;
+	  private static String username = "sa";
+	  private static String password = "";
+	  private static String URL = "jdbc:h2:~/test";
+
+	  public static void main(String[] args) throws Exception {
+		Class.forName("org.h2.Driver");
+	    con = DriverManager.getConnection(URL, username, password);
+
+	    if(con!=null) System.out.println("Connection Successful !\n");
+	    if (con==null) System.exit(0);
+	    Statement st = con.createStatement();
+	    //Statement позволяет отправлять запросы базе данных
+	    ResultSet rs = st.executeQuery("select hd from pc group by hd having count(hd)>=2");
+	    //ResultSet получает результирующую таблицу
+	    int x = rs.getMetaData().getColumnCount();
+	    //Resultset.getMetaData() получаем информацию
+	    //результирующей таблице
+	    while(rs.next()){
+	      for(int i=1; i<=x;i++){
+	        System.out.print(rs.getString(i) + "\t");
+	      }
+	      System.out.println();
+	    }
+	    System.out.println();
+	    if(rs!=null)rs.close();
+	    if(st!=null)st.close();
+	    if(con!=null)con.close();
+	  }
+
+}

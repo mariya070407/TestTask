@@ -1,0 +1,39 @@
+package TestTask.AccountManagement;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
+
+public class CreateTable {
+	  private static Connection con = null;
+	  private static String username = "sa";
+	  private static String password = "";
+	  private static String URL = "jdbc:h2:~/test";
+
+	  public static void main(String[] args) throws Exception {
+		Class.forName("org.h2.Driver");
+	    con = DriverManager.getConnection(URL, username, password);
+
+	    if(con!=null) System.out.println("Connection Successful !\n");
+	    if (con==null) System.exit(0);
+	    
+	    Statement st = con.createStatement();
+	    st.execute("CREATE TABLE TEST(NAME VARCHAR(60) PRIMARY KEY, SURNAME VARCHAR(60))");
+	    st.execute("INSERT INTO TEST VALUES('Ivan', 'Ivanov')");
+	    st.execute("INSERT INTO TEST VALUES('Petr', 'Petrov')");
+	    st.execute("INSERT INTO TEST VALUES('Vasilii', 'Vasilev')");
+	    st.execute("INSERT INTO TEST VALUES('Sidor', 'Sidorov')");
+	    //UPDATE TEST SET SURNAME='Hi' WHERE NAME='1';
+	    ResultSet rs;
+	    rs = st.executeQuery("SELECT * FROM TEST");
+	    while (rs.next()) {
+	    	String name = rs.getString("NAME");
+	    	System.out.println(rs.getString("SURNAME")+" "+name);
+	    }
+
+	    if(rs!=null)rs.close();  
+	    if(st!=null)st.close();  
+	    if(con!=null)con.close();
+	  }
+}
